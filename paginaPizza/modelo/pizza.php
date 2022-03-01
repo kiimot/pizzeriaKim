@@ -35,5 +35,23 @@ class Pizza extends Producto{
             $this->precio += 2;
         }
     }
+
+    /**
+     * Get the value of especial
+     */
+    public function getEspecial()
+    {
+        return $this->especial;
+    }
+
+    /**
+     * Set the value of especial
+     */
+    public function setEspecial($especial): self
+    {
+        $this->especial = $especial;
+
+        return $this;
+    }
 }
 ?>

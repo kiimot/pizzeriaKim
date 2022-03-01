@@ -70,6 +70,24 @@ abstract class Producto{
     }
 
     public abstract function calculaPrecio();
+
+    /**
+     * Get the value of img
+     */
+    public function getImg()
+    {
+        return $this->img;
+    }
+
+    /**
+     * Set the value of img
+     */
+    public function setImg($img): self
+    {
+        $this->img = $img;
+
+        return $this;
+    }
 }
 
 
