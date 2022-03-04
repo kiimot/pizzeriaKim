@@ -6,34 +6,14 @@
         <link rel="stylesheet" href="./assets/css/style.css" type="text/css"/>
     </head>
     <body>
-    <?php
-        session_start();
-
-        require_once './views/includes/loadObjects.php'; ?>
-        <!-- codigo web principal -->
-        <!-- recepcion de datos -->
-        <?php
-        //Creamos la variable de sesion si no existe
-        
-        if (!isset($_SESSION['pizzas'])){
-            $_SESSION['pizzas'] = [] ;
-        }
-        else{
-            // Miramos si nos ha llegado una pizza seleccionada por parametro
-            if (isset($_POST['pizza'])){
-                $pizzaSel = $listaPizzas[$_POST['pizza']];
-                //Añadimos la pizza a la variable sesion
-                $_SESSION['pizzas'][]= $pizzaSel;
-            }
-        }
-
-        //include cabecera 
-        require_once './views/cabecera.php'; 
-
-        ?>
-        <!-- Page content -->
+        <!-- include cabecera -->
+        <?php require_once './views/includes/loadObjects.php';
+        session_start();?>
+        <?php require_once './views/cabecera.php'; ?>
         <div class="w3-container w3-padding-32">
-        <table id="customers">
+        <?php
+        if (!empty($_SESSION['pizzas'])){?>
+            <table id="customers">
             <tr>
                 <th></th>
                 <th>Nombre</th>
@@ -41,10 +21,10 @@
                 <th>Masa</th>
                 <th>Especial</th>
                 <th>Precio</th>
-                <th></th>
+                <th>Cantidad</th>
             </tr>
             <?php
-            foreach ($listaPizzas as $pizza ){ ?>
+            foreach ($_SESSION['pizzas'] as $pizza ){ ?>
                 <tr>
                     <td><?= $pizza->getImg(); ?></td>
                     <td><?= $pizza->getNombre(); ?></td>
@@ -55,18 +35,17 @@
                     }else{
                         echo '<td>No</td>';
                     } ?>
+                    <td><?= $pizza->getEspecial(); ?></td>
                     <td><?= $pizza->getPrecio(); ?></td>
+                    <td><input type="number" name="cantidad"></td>
                     <td>
                         <form action='./index.php' method='post'>
                             <input type="hidden" name="pizza" value=<?= $pizza->getNombre();?> >
-                            <button class="bet-button w3-black w3-section" type="submit">Seleccionar</button>
+                            <input type="submit" value="Añadir">
+                            <input type="submit" value="Eliminar">
                         </form>
                     </td>
                 </tr>
             <?php } ?>
         </table>
-        </div>
-        <!-- include footer -->
-    </body>
-</html>
-
+        <?php }?>
